@@ -1,0 +1,13 @@
+m = 0;
+n = 10000;
+for i = 1:1000
+for j = 1:n
+x = rand;
+y = rand;
+if x^2+y^2<=1
+m = m+1;
+end
+end
+plot(i,4*(m/(i*n)),'.r');
+hold on;
+end
