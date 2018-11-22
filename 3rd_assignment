@@ -1,0 +1,27 @@
+k=0; 
+r = [0.05,0.28,0.21,0.23,0.25];
+p = [0,0.01,0.02,0.045,0.065];
+x=[0;0.24;0.4;0.1091;0.2212];
+Lb=[0; 0; 0; 0; 0];
+out=fopen("answer.txt","w+");
+hold on;
+xlabel('k（最低利润）');
+ylabel('q（最小风险）');  
+while k<=0.27
+    [x,fval,R,exitflag]=fminimax(@calculate_fun,x,p-r,-k,p+1,1,Lb);
+    if exitflag~=-2
+        plot(k,R,'r.');
+        fprintf(out,"When k=%f,x0=%f,x1=%f,x2=%f,x3=%f,x4=%f,the answer of R=%f.\n",k,x(1),x(2),x(3),x(4),x(5),R);
+    else
+        fprintf(out,"We can't find the solution for k = %f.\n",k);
+    end
+    k=k+0.001;
+end
+fclose(out);
+
+function f=calculate_fun(x)
+q=[0;0.025;0.015;0.055;0.026];
+for i=1:5
+    f(i)=q(i)*x(i);
+end
+end
